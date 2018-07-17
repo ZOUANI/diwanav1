@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bonSortie>
+    <header>
+        <numeroMessage>100</numeroMessage>
+        <dateMessage>2018-05-31T09:14:03</dateMessage>
+    </header>
+    
+    <accuse>
+        <referenceBonSortie>01234567890123456</referenceBonSortie>
+        <code>OK</code>
+        <description>lolooooo</description>
+    </accuse>
+    
+</bonSortie>

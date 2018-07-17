@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="jaxbTest2PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>bean.BonSortieHeader</class>
+    <class>bean.Operateur</class>
+    <class>bean.BonSortie</class>
+    <class>bean.Dum</class>
+    <class>bean.Ds</class>
+    <class>bean.TypeDs</class>
+    <class>bean.LotDedouanement</class>
+    <class>bean.LieuChargement</class>
+    <class>bean.TypeContenant</class>
+    <class>bean.MarqueMarchandise</class>
+    <class>bean.BonSortieImmatriculationVehicule</class>
+    <class>bean.BonSortieEquipement</class>
+    <class>bean.Equipement</class>
+    <class>bean.TypeEquipement</class>
+    <class>bean.Centre</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
+      <property name="javax.persistence.jdbc.user" value="app"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.password" value="app"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>

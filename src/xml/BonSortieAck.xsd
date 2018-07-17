@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+    <xsd:element name="bonSortie">
+        <!--    !!!!!!!!!!   Référence du bon de sortie Obligatoire Oui si Code = OK -->
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="header" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="numeroMessage" minOccurs="1"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:long">
+                                        <xsd:totalDigits value="19" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="dateMessage" type="xsd:dateTime"
+                                         minOccurs="1" maxOccurs="1" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                
+                <xsd:element name="accuse">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="referenceBonSortie" 
+                                         minOccurs="0" maxOccurs="1" >
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:length value="17" />
+                                        <xsd:pattern value="[0-9]{17}" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="code" minOccurs="1"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:enumeration value="OK" />
+                                        <xsd:enumeration value="NOK" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="description" 
+                                         minOccurs="1" maxOccurs="1" >
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:maxLength value="256" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+              
+                
+            
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

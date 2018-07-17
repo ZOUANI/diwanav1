@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+    <xsd:element name="bonSortie">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="header" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="numeroMessage" minOccurs="1"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:long">
+                                        <xsd:totalDigits value="19" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="dateMessage" type="xsd:dateTime"
+                                         minOccurs="1" maxOccurs="1" />
+                            <xsd:element name="fonctionMessage" minOccurs="1"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:int">
+                                        <xsd:enumeration value="1" />
+                                        <xsd:enumeration value="2" />
+                                        <xsd:enumeration value="3" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="operateur">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="numeroRC" type="xsd:string"
+                                         minOccurs="1" maxOccurs="1" />
+                            <xsd:element name="centreRC" type="xsd:string"
+                                         minOccurs="1" maxOccurs="1" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="dum">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="reference" 
+                                         minOccurs="1" maxOccurs="1" >
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:length value="17" />
+                                        <xsd:pattern value="[0-9]{17}" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="bon">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="referenceBon" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:length value="22" />
+                                        <xsd:pattern value="[0-9]{22}" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

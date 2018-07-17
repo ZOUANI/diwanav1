@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  TypeDs mandatory : Oui si referenceDS !=null -->
+<bonSortie>
+    <header>
+        <numeroMessage>100</numeroMessage>
+        <dateMessage>2018-05-31T09:05:53</dateMessage>
+        <fonctionMessage>1</fonctionMessage>
+    </header>
+    <operateur>
+        <numeroRC>8967</numeroRC>
+        <centreRC>81</centreRC>
+    </operateur>
+    <dum>
+        <reference>41101020180000988</reference>
+    </dum>
+    <bon>
+        <!--	1 cas (OK) : referenceDS!=null && typeContenant !=null	-->
+        <!--        
+        <referenceDS>HFHFHF</referenceDS>
+        <typeContenant>05</typeContenant>
+        -->
+        <!--	2 cas (OK) : referenceDS==null && typeContenant!=null 	-->
+        <!--        
+        <typeContenant>05</typeContenant>
+        -->
+        <!--	3 cas (OK) : referenceDS==null && typeContenant =null	-->
+
+        <!--	4 cas (NO) : referenceDS!=null && typeContenant =null -->
+                
+        <referenceDS>HFHFHF</referenceDS>
+        
+       
+        <nombreContenant>15</nombreContenant>
+        <marqueMarchandise>CEREALES</marqueMarchandise>
+        <immatrculationsVehicules>15035A6</immatrculationsVehicules>
+        <poidsNet>1000.50</poidsNet>
+    </bon>	
+</bonSortie>

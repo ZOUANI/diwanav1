@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  TypeDs mandatory : Oui si referenceDS !=null && 
+alwyas LieuChargement = "UN", "LOCODE"-->
+<bonSortie>
+    <header>
+        <numeroMessage>100</numeroMessage>
+        <dateMessage>2018-05-31T09:05:53</dateMessage>
+        <fonctionMessage>1</fonctionMessage>
+    </header>
+    <operateur>
+        <numeroRC>8967</numeroRC>
+        <centreRC>81</centreRC>
+    </operateur>
+    <dum>
+        <reference>41101020180000988</reference>
+    </dum>
+    <bon>
+        <!--	1 cas (OK) : referenceDS!=null && LieuChargement appartient = "UN", "LOCODE"	-->
+        <!--        
+        <referenceDS>HFHFHF</referenceDS>
+        <lieuChargement>LOCODE</lieuChargement>
+        -->
+        <!--	2 cas (OK) : referenceDS==null && LieuChargement appartient = "UN", "LOCODE"	-->
+        <!--        
+        <lieuChargement>UN</lieuChargement>
+        -->
+        <!--	3 cas (OK) : referenceDS==null && LieuChargement =null	-->
+
+        <!--	4 cas (NO) : referenceDS!=null && LieuChargement n'appartient pas = "UN", "LOCODE"	-->
+        <!--        
+         <referenceDS>HFHFHF</referenceDS>
+         <lieuChargement>RIEN</lieuChargement>
+        -->  
+        <!--	5 cas (NO) : referenceDS==null && LieuChargement n'appartient pas = "UN", "LOCODE"	-->
+        <!--   
+        <lieuChargement>DIWANA</lieuChargement>
+        -->
+      
+        <typeContenant>003</typeContenant>
+        <nombreContenant>15</nombreContenant>
+        <marqueMarchandise>CEREALES</marqueMarchandise>
+        <immatrculationsVehicules>15035A6</immatrculationsVehicules>
+        <poidsNet>1000.50</poidsNet>
+    </bon>	
+</bonSortie>

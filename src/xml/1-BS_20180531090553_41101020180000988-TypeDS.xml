@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+               
+<!--  TypeDs mandatory : Oui si referenceDS !=null && 
+alwyas typeDs = ("01", "03", "04", "05", "06", "07")-->
+<bonSortie>
+    <header>
+        <numeroMessage>100</numeroMessage>
+        <dateMessage>2018-05-31T09:05:53</dateMessage>
+        <fonctionMessage>1</fonctionMessage>
+    </header>
+    <operateur>
+        <numeroRC>8967</numeroRC>
+        <centreRC>81</centreRC>
+    </operateur>
+    <dum>
+        <reference>41101020180000988</reference>
+    </dum>
+    <bon>
+        <!--	1 cas (OK) : referenceDS!=null && typeDs appartient = ("01", "03", "04", "05", "06", "07")	-->
+        <!--        
+        <referenceDS>HFHFHF</referenceDS>
+        <typeDS>05</typeDS>
+        -->
+        <!--	2 cas (OK) : referenceDS==null && typeDs appartient = ("01", "03", "04", "05", "06", "07")	-->
+        <!--        
+        <typeDS>05</typeDS>
+        -->
+        <!--	3 cas (OK) : referenceDS==null && typeDs =null	-->
+
+        <!--	4 cas (NO) : referenceDS!=null && typeDs n'appartient pas = ("01", "03", "04", "05", "06", "07")	-->
+        <!--
+        <referenceDS>HFHFHF</referenceDS>
+        <typeDS>0555</typeDS>
+        -->
+        <!--	5 cas (NO) : referenceDS==null && typeDs n'appartient pas = ("01", "03", "04", "05", "06", "07")	-->
+        <!--   
+        <typeDS>005</typeDS>
+        -->
+      
+        <typeContenant>003</typeContenant>
+        <nombreContenant>15</nombreContenant>
+        <marqueMarchandise>CEREALES</marqueMarchandise>
+        <immatrculationsVehicules>15035A6</immatrculationsVehicules>
+        <poidsNet>1000.50</poidsNet>
+    </bon>	
+</bonSortie>

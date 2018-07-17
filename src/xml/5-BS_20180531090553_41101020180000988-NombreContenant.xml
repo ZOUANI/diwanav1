@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Nombre de contenant  : Oui sauf si code type Contenant in 
+("000", "001", "010", "020", "030", "040", "050", "060") -->
+<bonSortie>
+    <header>
+        <numeroMessage>100</numeroMessage>
+        <dateMessage>2018-05-31T09:05:53</dateMessage>
+        <fonctionMessage>1</fonctionMessage>
+    </header>
+    <operateur>
+        <numeroRC>8967</numeroRC>
+        <centreRC>81</centreRC>
+    </operateur>
+    <dum>
+        <reference>41101020180000988</reference>
+    </dum>
+    <bon>
+        <!--	1 cas (OK) :  typeContenant in ("000", "001", "010", "020", "030", "040", "050", "060") && nombreContenant!=null 	-->
+        <!--        
+        <typeContenant>010</typeContenant>
+        <nombreContenant>15</nombreContenant>
+        -->
+        <!--	2 cas (OK) : typeContenant!= null and  not in ("000", "001", "010", "020", "030", "040", "050", "060") && nombreContenant!=null  	-->
+        <!--        
+        <typeContenant>100110</typeContenant>
+        <nombreContenant>15</nombreContenant>
+        -->
+        <!--	3 cas (OK) : typeContenant== null && nombreContenant!=null  (to be confirmed) 	-->
+        <!--        
+        <nombreContenant>899</nombreContenant>
+        -->
+        <!--	4 cas (NO) : typeContenant= null && nombreContenant==null	-->
+       
+        <!--	5 cas (NO) : typeContenant!= null and  not in ("000", "001", "010", "020", "030", "040", "050", "060")  && nombreContenant==null 	-->
+        <!--        
+        <typeContenant>899</typeContenant>
+        -->
+        
+
+        <referenceDS>HFHFHF</referenceDS>
+        
+       
+        <marqueMarchandise>CEREALES</marqueMarchandise>
+        <immatrculationsVehicules>15035A6</immatrculationsVehicules>
+        <poidsNet>1000.50</poidsNet>
+    </bon>	
+</bonSortie>

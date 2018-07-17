@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Poids net  mandatory : Oui si  
+- Le nombreContenant != null OR  la mlvPesage=oui, 
+ET 
+-  tare == null et le poidsBrut==null
+-->
+<bonSortie>
+    <header>
+        <numeroMessage>100</numeroMessage>
+        <dateMessage>2018-05-31T09:05:53</dateMessage>
+        <fonctionMessage>1</fonctionMessage>
+    </header>
+    <operateur>
+        <numeroRC>8967</numeroRC>
+        <centreRC>81</centreRC>
+    </operateur>
+    <dum>
+        <reference>41101020180000988</reference>
+    </dum>
+    <bon>
+                
+        <!--	1 cas (OK) :  Le nombreContenant != null & tare == null & poidsBrut==null	-->
+        <!--        
+       <nombreContenant>15</nombreContenant>
+       <poidsNet>1000.50</poidsNet>
+        -->
+        <!--	2 cas (OK) : mlvPesage=oui & tare == null & poidsBrut==null	-->
+        <!--        
+        <mlvPesage>oui</mlvPesage>
+        <poidsNet>1000.50</poidsNet>
+        -->
+        <!--	3 cas (NO) : mlvPesage=oui & tare != null & poidsBrut==null	-->
+        <!--        
+        <mlvPesage>oui</mlvPesage>
+        <tare>12233</tare>
+        -->
+        <!--	4 cas (NO) : mlvPesage=oui & tare = null & poidsBrut!=null	-->
+        <!--        
+        <mlvPesage>oui</mlvPesage>
+        <poidsBrut>12233</poidsBrut>
+        -->
+        <!--	5 (prob of 1) cas (NO) : Le nombreContenant != null & tare == null & poidsBrut==null	-->
+        <!--        
+        <nombreContenant>15</nombreContenant>
+        -->
+        <!--	6 (prob of 2) cas (NO) :  mlvPesage=oui & tare == null & poidsBrut==null	-->
+        <!--        
+        <mlvPesage>oui</mlvPesage>
+        -->
+        <!--	7  cas (NO) :  mlvPesage=null & tare == null & poidsBrut==null & nombreContenant=null	-->
+        
+        <!--	8 cas (NO) : mlvPesage=non & tare == null & poidsBrut==null & nombreContenant=null	-->
+        <!--        
+        <mlvPesage>non</mlvPesage>
+        -->
+       
+      
+        <typeContenant>003</typeContenant>
+        <marqueMarchandise>CEREALES</marqueMarchandise>
+        <immatrculationsVehicules>15035A6</immatrculationsVehicules>
+    </bon>	
+</bonSortie>

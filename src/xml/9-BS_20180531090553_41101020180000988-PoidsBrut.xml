@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  PoidBrut  mandatory : Oui si  
+- Le nombreContenant != null OR  la mlvPesage=oui 
+ET 
+- poidsNet==null
+-->
+<bonSortie>
+    <header>
+        <numeroMessage>100</numeroMessage>
+        <dateMessage>2018-05-31T09:05:53</dateMessage>
+        <fonctionMessage>1</fonctionMessage>
+    </header>
+    <operateur>
+        <numeroRC>8967</numeroRC>
+        <centreRC>81</centreRC>
+    </operateur>
+    <dum>
+        <reference>41101020180000988</reference>
+    </dum>
+    <bon>
+                
+        <!--	1 cas (OK) :  Le nombreContenant != null & poidsNet == nul ==> mandatory	-->
+        <!--                       
+       <nombreContenant>15</nombreContenant>
+       <poidsBrut>1000.50</poidsBrut>
+        -->
+        <!--	2 cas (OK) : mlvPesage=oui && poidsNet == null	-->
+        <!--        
+        <mlvPesage>oui</mlvPesage>
+        <poidsBrut>1000.50</poidsBrut>
+        -->
+        <!--	3  cas (OK) :  Le nombreContenant == null & poidsNet == nul & mlvPesage= null	-->
+
+        <!--	4  cas (OK) : poidsNet!=null && mlvPesage !=null (poidsBrut facultatif)	-->
+        <!--  
+        <poidsNet>2333.8</poidsNet>
+        <mlvPesage>non</mlvPesage>
+        <poidsBrut>1000.50</poidsBrut>
+        -->
+        <!--	5  cas (OK) : poidsNet!=null && mlvPesage !=null (poidsBrut facultatif)	-->
+        <!--  
+        <poidsNet>2333.8</poidsNet>
+        <mlvPesage>non</mlvPesage>
+        -->
+        <!--	6 cas (OK) : mlvPesage=non & poidsBrut == null & poidsBrut==null & nombreContenant=null	-->
+        <!--        
+        <mlvPesage>non</mlvPesage>
+        -->
+        <!--	7(prob of 1) cas (NO) : Le nombreContenant != null & poidsNet == nul	-->
+        <!--      
+        <nombreContenant>15</nombreContenant>
+        -->
+        <!--	8 (prob of 2) cas (NO) :  mlvPesage=oui && poidsNet == null	-->
+        <!--                        
+        <mlvPesage>oui</mlvPesage>
+        -->
+       
+        
+       
+      
+        <typeContenant>003</typeContenant>
+        <marqueMarchandise>CEREALES</marqueMarchandise>
+        <immatrculationsVehicules>15035A6</immatrculationsVehicules>
+    </bon>	
+</bonSortie>

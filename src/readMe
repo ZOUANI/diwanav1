@@ -1,0 +1,23 @@
+1) mapping entre mes bean et le ref
+
+BonSortie innexistant
+BonSortieEquipement innexistant
+BonSortieHeader innexistant
+Ds innexistant
+Equipement innexistant
+MarqueMarchandise innexistant
+MLV innexistant
+
+MED_LIB
+LotDedouanement existant businessLayer.model.acquisitionsDS
+
+DED_LIB
+Dum existant ded.dum.model
+
+REF_LIB
+TypeContenant existant referentiel.modelRefact.entities.TypeContenant
+TypeDs existant referentiel.modelRefact.entities.TypeDs
+TypeEquipement referentiel.modelRefact.existant entities.
+LieuChargement referentiel.modelRefact.existant entities.LieuChargement
+Operateur existant referentiel.modelRefact.acteurs.Operateur
+Centre existant referentiel.modelRefact.acteurs.CentreRc

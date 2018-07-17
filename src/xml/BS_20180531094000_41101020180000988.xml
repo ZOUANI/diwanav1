@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bonSortie>
+    <header> <!-- oc 1  --><!-- ?????????mlvPesage not founded in xsd?????  -->
+        <numeroMessage>100</numeroMessage><!-- oc 1 && val : long 19  -->
+        <dateMessage>2018-05-31T09:40:00</dateMessage><!-- oc 1 && val: dateTime  -->
+    </header>
+    <operateur>
+        <numeroRC>8967</numeroRC> <!-- oc 1 && val : string  -->
+        <centreRC>81</centreRC> <!-- oc 1 && val : string  -->
+    </operateur>
+    <dum>
+        <reference>41101020180000988</reference> <!-- oc 1 && val : string [0-9]{17}  --> 
+    </dum>
+    <bon>
+        <referenceBon>1234567890123456789012</referenceBon> <!-- oc 1 && val : string [0-9]{22}  --> 
+    </bon>	
+</bonSortie>
