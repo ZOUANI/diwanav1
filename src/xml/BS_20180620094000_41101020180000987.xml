@@ -2,8 +2,8 @@
 <bonSortie>
     <header> <!-- oc 1  --><!-- ?????????mlvPesage not founded in xsd?????  -->
         <numeroMessage>100</numeroMessage><!-- oc 1 && val : long 19  -->
-        <dateMessage>2018-05-31T09:40:00</dateMessage><!-- oc 1 && val: dateTime  -->
-        <fonctionMessage>1</fonctionMessage><!-- oc 1 && val: int 1,2 or 3  -->
+        <dateMessage>2018-06-20T09:40:00</dateMessage><!-- oc 1 && val: dateTime  -->
+        <fonctionMessage>2</fonctionMessage><!-- oc 1 && val: int 1,2 or 3  -->
     </header>
     <operateur>
         <numeroRC>8967</numeroRC> <!-- oc 1 && val : string  -->
@@ -13,10 +13,10 @@
         <reference>41101020180000987</reference> <!-- oc 1 && val : string [0-9]{17}  --> 
     </dum>
     <bon>
-        <referenceBon>1234567890123456789012</referenceBon> <!-- oc 1 && val : string [0-9]{22}  --> 
+       <referenceBon>1234567890123456789012</referenceBon> <!--   oc 1 && val : string [0-9]{22}  --> 
         <typeDS>01</typeDS><!-- oc 0 ou 1 && val : string in 01,03,04,05,06,07  --> 
-        <referenceDS>41100020180000012</referenceDS> <!-- oc 0 ou 1 && val : string [0-9]{17}  --> 
-        <referenceLot>CNT01</referenceLot> <!-- oc 0 ou 1 && val : string maxLength=10  --> 
+        <referenceDS>41100020180000012</referenceDS> <!-- 41100020180000012 oc 0 ou 1 && val : string [0-9]{17}  --> 
+        <referenceLot>ANA010134</referenceLot> <!-- oc 0 ou 1 && val : string maxLength=10  --> 
         <lieuChargement>UN</lieuChargement><!-- oc 0 ou 1 && val : string maxLength=10  --> 
         <typeContenant>2</typeContenant><!-- oc 0 ou 1 && val : string maxLength=30  --> 
         <nombreContenant>2</nombreContenant><!-- oc 0 ou 1 && val : string ([0-9]){0,10}  --> 
@@ -24,7 +24,7 @@
         <immatrculationsVehicules>866247ww</immatrculationsVehicules><!-- oc 0 ou 1 && val : string maxLength=1000  --> 
         <poidsNet>1000.20</poidsNet><!-- oc 0 ou 1 && val : decimal [0-9]{0,10},[0,9]{0,3} warning in xsd : totalDigits=15==> exact 15 ==> error   --> 
         <poidsBrut>1000.20</poidsBrut><!-- oc 0 ou 1 && val : decimal [0-9]{0,10},[0,9]{0,3} warning in xsd : totalDigits=15==> exact 15 ==> error   --> 
-        <tare>30.10</tare><!-- oc 0 ou 1 && val : decimal [0-9]{0,10},[0,9]{0,3} warning in xsd : totalDigits=15==> exact 15 ==> error   --> 
+        <tare>1122.90</tare><!-- oc 0 ou 1 && val : decimal [0-9]{0,10},[0,9]{0,3} warning in xsd : totalDigits=15==> exact 15 ==> error   --> 
         <equipement><!-- oc 0 à infini  --> 
             <referenceEquipement>AX-088-AN</referenceEquipement><!-- oc 1 && val : string maxLength=30   --> 
             <typeEquipement>006</typeEquipement><!-- oc 1 && val : string maxLength=30   --> 

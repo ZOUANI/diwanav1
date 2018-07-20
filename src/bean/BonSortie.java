@@ -26,32 +26,44 @@ public class BonSortie implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    // is mlv avec pesage ==> serviceConsomme de eci_lib
+    //*********************************
     @ManyToOne
-    private BonSortieHeader bonSortieHeader;
+    private BonSortieHeader bonSortieHeader;// n'existe pas mais dateHeureBs=dateMessage + pas besoin de stock le num de message?
     @ManyToOne
-    private Operateur operateur;
+    private Accuse accuse;// n'existe pas
     @ManyToOne
-    private Dum dum;
+    private TypeContenant typeContenant;// ?????? lot dedouan -> lignelot -> typeContenant??
+
+    //**************************************
     @ManyToOne
-    private Ds ds;
+    private Dum dum;// ?? ListBonSortie -> idDeclarationEnDouane
+    private String marqueMarchandise;//c est marque ???
+    private int numeroLot;//??? to be deduced from idLot
     @ManyToOne
-    private LotDedouanement lotDedouanement;
+    private Operateur operateur;//ok
     @ManyToOne
-    private LieuChargement lieuChargement;
+    private Ds ds;//ok Declaration Dossier mais idDossierDeclaration simplement
     @ManyToOne
-    private TypeContenant typeContenant;
-    private String nombreContenant;
-    @ManyToOne
-    private MarqueMarchandise marqueMarchandise;
-    private String immatriculationVehicule;
-    private BigDecimal poidNet;
-    private BigDecimal poidBrute;
-    private BigDecimal tare;
+    private LieuChargement lieuChargement;//ok
+    private String nombreContenant; //ok
+    private String immatriculationVehicule;//ok
+    private BigDecimal poidNet;//ok
+    private BigDecimal poidBrute;//ok
+    private BigDecimal tare;//ok
     @OneToMany(mappedBy = "bonSortie")
-    private List<BonSortieEquipement> bonSortieEquipements;
+    private List<BonSortieEquipement> bonSortieEquipements;//ok equipementBS 
 
     public List<BonSortieEquipement> getBonSortieEquipements() {
         return bonSortieEquipements;
+    }
+
+    public Accuse getAccuse() {
+        return accuse;
+    }
+
+    public void setAccuse(Accuse accuse) {
+        this.accuse = accuse;
     }
 
     public void setBonSortieEquipements(List<BonSortieEquipement> bonSortieEquipements) {
@@ -90,14 +102,6 @@ public class BonSortie implements Serializable {
         this.ds = ds;
     }
 
-    public LotDedouanement getLotDedouanement() {
-        return lotDedouanement;
-    }
-
-    public void setLotDedouanement(LotDedouanement lotDedouanement) {
-        this.lotDedouanement = lotDedouanement;
-    }
-
     public LieuChargement getLieuChargement() {
         return lieuChargement;
     }
@@ -120,14 +124,6 @@ public class BonSortie implements Serializable {
 
     public void setNombreContenant(String nombreContenant) {
         this.nombreContenant = nombreContenant;
-    }
-
-    public MarqueMarchandise getMarqueMarchandise() {
-        return marqueMarchandise;
-    }
-
-    public void setMarqueMarchandise(MarqueMarchandise marqueMarchandise) {
-        this.marqueMarchandise = marqueMarchandise;
     }
 
     public String getImmatriculationVehicule() {

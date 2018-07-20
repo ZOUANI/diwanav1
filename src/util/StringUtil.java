@@ -25,12 +25,12 @@ public class StringUtil {
         return condition ? 1 : -1;
     }
 
-   
-
     public static String transformListToString(List<String> list) {
         String res = "";
-        for (String element : list) {
-            res += element + "\n";
+        if (list != null) {
+            for (String element : list) {
+                res += element + "\n";
+            }
         }
         return res;
     }

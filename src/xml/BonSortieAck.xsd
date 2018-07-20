@@ -22,7 +22,7 @@
                     </xsd:complexType>
                 </xsd:element>
                 
-                <xsd:element name="accuse">
+                <xsd:element name="accuse"  minOccurs="1" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:sequence>
                             <xsd:element name="referenceBonSortie" 

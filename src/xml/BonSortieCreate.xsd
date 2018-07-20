@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+    <xsd:element name="bonSortie">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="header" minOccurs="1" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="numeroMessage" minOccurs="1"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:long">
+                                        <xsd:totalDigits value="19" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="dateMessage" type="xsd:dateTime" 
+                                         minOccurs="1" maxOccurs="1" >
+                            </xsd:element>
+                            <xsd:element name="fonctionMessage" minOccurs="1"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:int">
+                                        <xsd:enumeration value="1" />
+                                        <xsd:enumeration value="2" />
+                                        <xsd:enumeration value="3" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="operateur">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="numeroRC" type="xsd:string"
+                                         minOccurs="1" maxOccurs="1" />
+                            <xsd:element name="centreRC" type="xsd:string"
+                                         minOccurs="1" maxOccurs="1" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="dum">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="reference" 
+                                         minOccurs="1" maxOccurs="1" >
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:length value="17" />
+                                        <xsd:pattern value="[0-9]{17}" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="bon">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="typeDS" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:enumeration value="01" />
+                                        <xsd:enumeration value="03" />
+                                        <xsd:enumeration value="04" />
+                                        <xsd:enumeration value="05" />
+                                        <xsd:enumeration value="06" />
+                                        <xsd:enumeration value="07" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="referenceDS" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:length value="17" />
+                                        <xsd:pattern value="[0-9]{17}" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="referenceLot" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:maxLength value="10" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="lieuChargement" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:maxLength value="10"/>
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="typeContenant" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:maxLength value="30" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="nombreContenant" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:maxLength value="10" />
+                                        <xsd:pattern value="([0-9])*" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="marqueMarchandise" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:maxLength value="30" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="immatrculationsVehicules" minOccurs="0"
+                                         maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:maxLength value="1000" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="poidsNet" minOccurs="0" maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:decimal">
+                                        <xsd:totalDigits value="15" />
+                                        <xsd:fractionDigits value="3" />
+                                        <xsd:minInclusive value="0.000" />
+                                        <xsd:maxInclusive value="9999999999.999" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="poidsBrut" minOccurs="0" maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:decimal">
+                                        <xsd:totalDigits value="15" />
+                                        <xsd:fractionDigits value="3" />
+                                        <xsd:minInclusive value="0.000" />
+                                        <xsd:maxInclusive value="9999999999.999" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="tare" minOccurs="0" maxOccurs="1">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:decimal">
+                                        <xsd:totalDigits value="15" />
+                                        <xsd:fractionDigits value="3" />
+                                        <xsd:minInclusive value="0.000" />
+                                        <xsd:maxInclusive value="9999999999.999" />
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="equipement" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="referenceEquipement" minOccurs="1" maxOccurs="1">
+                                            <xsd:simpleType>
+                                                <xsd:restriction base="xsd:string">
+                                                    <xsd:maxLength value="30" />
+                                                </xsd:restriction>
+                                            </xsd:simpleType>
+                                        </xsd:element>
+                                        <xsd:element name="typeEquipement" minOccurs="1"
+                                                     maxOccurs="1">
+                                            <xsd:simpleType>
+                                                <xsd:restriction base="xsd:string">
+                                                    <xsd:maxLength value="30" />
+                                                </xsd:restriction>
+                                            </xsd:simpleType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+				
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

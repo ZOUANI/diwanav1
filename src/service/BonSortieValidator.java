@@ -5,11 +5,8 @@
  */
 package service;
 
-import java.util.Arrays;
-import java.util.List;
 import javax.xml.bind.JAXBException;
 import org.xml.sax.SAXException;
-import util.MyValidationEventHandler;
 import util.StringUtil;
 import vo.BonSortie;
 
@@ -19,65 +16,94 @@ import vo.BonSortie;
  */
 public class BonSortieValidator {
 
-    private JaxbBonSortie JaxbBonSortie = new JaxbBonSortie();
-    private List<String> typeDeclarationDS = Arrays.asList("01", "03", "04", "05", "06", "07");
-    private List<String> codeLieuChargement = Arrays.asList("UN", "LOCODE");
-    private List<String> codeTypeContenant = Arrays.asList("000", "001", "010", "020", "030", "040", "050", "060");
+    public enum TYPE_FILE {
+        CREATE, EDIT, REMOVE, ACK
+    }
+    BonSortieValidator1L bonSortie1LValidator = new BonSortieValidator1L();
+    BonSortieValidator2L bonSortie2LValidator = new BonSortieValidator2L();
 
-    public Object[] validate(String absolutePath, String xmlPath, String xsdPath, int typeValidate) throws JAXBException, SAXException {
-        if (typeValidate == 1) {
+    public Object[] validate(String absolutePath, String xmlPath, String xsdPath, TYPE_FILE type_file) throws JAXBException, SAXException {
+        if (type_file == TYPE_FILE.CREATE) {
             return validateCreate(absolutePath, xmlPath, xsdPath);
-        } else if (typeValidate == 2) {
+        } else if (type_file == TYPE_FILE.EDIT) {
             return validateEdit(absolutePath, xmlPath, xsdPath);
-        } else if (typeValidate == 3) {
+        } else if (type_file == TYPE_FILE.REMOVE) {
             return validateRemove(absolutePath, xmlPath, xsdPath);
-        } else if (typeValidate == 4) {
+        } else if (type_file == TYPE_FILE.ACK) {
             return validateAck(absolutePath, xmlPath, xsdPath);
         } else {
-            return new Object[]{-5, BonSortieMessageManager.getTypeActionNotValidMessage()};
+            return new Object[]{-5, BonSortieMessageManager1L.putTypeActionNotValidMessage(-1)};
+        }
+    }
+
+    private Object[] validateAbstract(String absoluteXmlPath, String absoluteXsd, String xmlPath,
+            String xsdPath, boolean activateRefDumAndDate, boolean activate1L, boolean activate2L,
+            TYPE_FILE type_file) throws JAXBException, SAXException {
+        Object[] resValidateXmlFileName = splitXmlFileName(xmlPath);
+        if (new Integer(resValidateXmlFileName[0] + "") < 0) {
+            return new Object[]{-1, BonSortieMessageManager1L.putErrorMessageXmlFileNameNotValidMessage(-1)};
+        }
+        boolean ack = (new Integer(resValidateXmlFileName[0] + "") == 1);
+        // BonSortie bonSortie = new JaxbBonSortie().unmarshallAndValiadte(absoluteXmlPath + xmlPath, absoluteXsd + xsdPath);
+        BonSortie bonSortie = new JaxbBonSortie().unmarshall(absoluteXmlPath + xmlPath);
+        if (!BonSortieMessageManager1L.getErrorsXsd().isEmpty()) {
+            validate1L(bonSortie, activate1L, ack, type_file);
+            return new Object[]{-2, BonSortieMessageManager1L.getErrors1L()};
+        } else if (!validateRefDumAndDate(resValidateXmlFileName, bonSortie, activateRefDumAndDate)) {// no message error ==> to be tested
+            return new Object[]{-3, BonSortieMessageManager2L.putErrorMessageXmlFileNameAndFileContentNotValidMessage(-1)};
+        }
+        validate2L(bonSortie, activate2L, ack, type_file);
+        if (!BonSortieMessageManager2L.getErrors2L().isEmpty()) {
+            return new Object[]{-4, BonSortieMessageManager2L.getErrors2L()};
+        } else {
+            return new Object[]{1, bonSortie};
         }
     }
 
     private Object[] validateCreate(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, true, TYPE_FILE.CREATE);
     }
 
     private Object[] validateEdit(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, true, TYPE_FILE.EDIT);
     }
 
     private Object[] validateAck(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, false, true);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, false, true, true, TYPE_FILE.ACK);
     }
 
     private Object[] validateRemove(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, false, false);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, false, TYPE_FILE.REMOVE);
     }
 
-    private Object[] validateAbstract(String absoluteXmlPath, String absoluteXsd, String xmlPath,
-            String xsdPath, boolean activateRefDumAndDate, boolean activateSecondLevel)
-            throws JAXBException, SAXException {
-        Object[] resValidateXmlFileName = splitXmlFileName(xmlPath);
-        if (new Integer(resValidateXmlFileName[0] + "") < 0) {
-            return new Object[]{-1, BonSortieMessageManager.getXmlFileNameNotValidMessage()};
+    private void validate1L(BonSortie bonSortie, boolean activate1L, boolean ack, TYPE_FILE type_file) {
+        bonSortie1LValidator.valiadte1L(bonSortie, activate1L, ack, type_file);
+    }
+
+    private void validate2L(BonSortie bonSortie, boolean activate1L, boolean ack, TYPE_FILE type_file) {
+        bonSortie2LValidator.validate2L(bonSortie, activate1L, ack, type_file);
+    }
+
+    private Object[] splitXmlFileName(String bonSortieXmlFileName) {
+        if (StringUtil.isEmpty(bonSortieXmlFileName)) {
+            return new Object[]{-1, null, null};
         }
-        BonSortie bonSortie = new JaxbBonSortie().unmarshallAndValiadte(absoluteXmlPath + xmlPath, absoluteXsd + xsdPath);
-        if (!MyValidationEventHandler.getXsdErrors().isEmpty()) {
-            return new Object[]{-2, MyValidationEventHandler.getXsdErrors()};
-        } else if (!validateRefDumAndDate(resValidateXmlFileName, bonSortie, activateRefDumAndDate)) {
-            return new Object[]{-3, BonSortieMessageManager.getXmlFileNameAndFileContentNotValidMessage()};
-        }
-        validateSecondLevel(bonSortie, activateSecondLevel, (new Integer(resValidateXmlFileName[0] + "") == 1));
-        if (!BonSortieMessageManager.getErrors().isEmpty()) {
-            return new Object[]{-4, BonSortieMessageManager.getErrors()};
+        String[] mySplit = bonSortieXmlFileName.split("_");
+        if (bonSortieXmlFileName.startsWith("ACK_BS_") && mySplit != null && mySplit.length == 4 && mySplit[2].length() == 14) {
+            return new Object[]{1, mySplit[2], mySplit[3]};
+        } else if (bonSortieXmlFileName.startsWith("BS_") && mySplit != null && mySplit.length == 3 && mySplit[1].length() == 14) {
+            return new Object[]{2, mySplit[1], mySplit[2]};
         } else {
-            return new Object[]{1, bonSortie};
+            return new Object[]{-2, null, null};
         }
     }
 
     private boolean validateRefDumAndDate(Object[] resValidateXmlFileName, BonSortie bonSortie, boolean isActive) {
         if (!isActive) {
             return true;
+        }
+        if (resValidateXmlFileName[1] == null || bonSortie.getHeader().getDateMessage() == null) {
+            return false;
         }
         String referenceDum = (resValidateXmlFileName[2] + "").split("\\.")[0];
         String rowDate = (resValidateXmlFileName[1] + "");
@@ -95,147 +121,29 @@ public class BonSortieValidator {
         return (yMd + hms).equals(rowDate);
     }
 
-    /*
-    1 ==> ACK_BS_
-    2 ==> BS_
-     */
-    private Object[] splitXmlFileName(String bonSortieXmlFileName) {
-        if (StringUtil.isEmpty(bonSortieXmlFileName)) {
-            return new Object[]{-1, null, null};
-        }
-        String[] mySplit = bonSortieXmlFileName.split("_");
-        if (bonSortieXmlFileName.startsWith("ACK_BS_") && mySplit != null && mySplit.length == 4 && mySplit[2].length() == 14) {
-            return new Object[]{1, mySplit[2], mySplit[3]};
-        } else if (bonSortieXmlFileName.startsWith("BS_") && mySplit != null && mySplit.length == 3 && mySplit[3].length() == 14) {
-            return new Object[]{2, mySplit[1], mySplit[2]};
+    public static Object[] validateExistMandatoryStyle(String attribute, boolean condition, String attributeNameMessage) {
+        int exist = StringUtil.isNotEmpty(attribute);
+        int res;
+        if (exist > 0) {
+            res = condition ? 1 : -1;
         } else {
-            return new Object[]{-2, null, null};
+            res = -2;
         }
+        return new Object[]{res, attributeNameMessage};
     }
 
-    private void validateSecondLevel(BonSortie bonSortie, boolean isActive, boolean ack) {
-        if (!isActive) {
-            return;
-        }
-        BonSortieMessageManager.clearMessages();
-        if (ack) {
-            BonSortieMessageManager.getErrorMessageReferenceBonSortie(validateReferenceBonSortie(ack, bonSortie));
+    public static Object[] validateExistNotMandatoryStyle(String attribute, boolean condition, String attributeNameMessage) {
+        boolean isNull = StringUtil.isEmpty(attribute);
+        int res;
+        if (isNull) {
+            res = 2;
         } else {
-            BonSortieMessageManager.getErrorMessageTypeDs(validateTypeDs(bonSortie));
-            BonSortieMessageManager.getErrorMessageLieuChargement(validateLieuChargement(bonSortie));
-            BonSortieMessageManager.getErrorMessageReferenceLotDedouanement(validateLotDedouanement(bonSortie));
-            BonSortieMessageManager.getErrorMessageTypeContenant(validateTypeContenant(bonSortie));
-            BonSortieMessageManager.getErrorMessageNombreContenant(validateNombreContenant(bonSortie));
-            BonSortieMessageManager.getErrorMessageMarqueMarchandise(validateMarqueMarchandise(bonSortie));
-            BonSortieMessageManager.getErrorMessagePoidsNet(validatePoidNet(bonSortie));
-            BonSortieMessageManager.getErrorMessageTare(validateTare(bonSortie));
-            BonSortieMessageManager.getErrorMessagePoidsBrut(validatePoidBrute(bonSortie));
+            res = (condition) ? 1 : -1;
         }
+        return new Object[]{res, attributeNameMessage};
     }
 
-    private int validateReferenceBonSortie(boolean ack, BonSortie bonSortie) {
-        if (ack && bonSortie.getAccuse().getCode() != null && bonSortie.getAccuse().getCode().equals("OK")) {
-            return StringUtil.isNotEmpty(bonSortie.getAccuse().getReferenceBonSortie());
-        }
-        return 2;
-    }
-
-    private int validateTypeDs(BonSortie bonSortie) {
-        return isValide(bonSortie, typeDeclarationDS, bonSortie.getBon().getTypeDS());
-    }
-
-    private int validateLieuChargement(BonSortie bonSortie) {
-        return isValide(bonSortie, codeLieuChargement, bonSortie.getBon().getLieuChargement());
-    }
-
-    private int validateLotDedouanement(BonSortie bonSortie) {
-        return isValide(bonSortie, null, bonSortie.getBon().getReferenceLot());
-    }
-
-    private int validateTypeContenant(BonSortie bonSortie) {
-        return isValide(bonSortie, null, bonSortie.getBon().getTypeContenant());
-    }
-
-    private int validateNombreContenant(BonSortie bonSortie) {
-        int index = codeTypeContenant.indexOf(bonSortie.getBon().getTypeContenant());
-        if (index == -1) {
-            return StringUtil.isNotEmpty(bonSortie.getBon().getNombreContenant());
-        }
-        return 2;
-    }
-
-    private int validateMarqueMarchandise(BonSortie bonSortie) {
-        if (bonSortie.getBon().getReferenceDS() != null) {
-            return StringUtil.isNotEmpty(bonSortie.getBon().getMarqueMarchandise());
-        }
-        return 2;
-    }
-
-    private int validatePoidNet(BonSortie bonSortie) {
-        String poidBrut = bonSortie.getBon().getPoidsBrut();
-        String tare = bonSortie.getBon().getTare();
-        String poidsNet = bonSortie.getBon().getPoidsNet();
-        int isMandatory = StringUtil.validateUsingCondition((validateNombreContenantAndMlv(bonSortie))
-                && (StringUtil.isEmpty(poidBrut) && StringUtil.isEmpty(tare)));
-        if (isMandatory > 0) {
-            return StringUtil.isNotEmpty(poidsNet);
-        }
-        return 2;
-    }
-
-    private int validateTare(BonSortie bonSortie) {
-        return validateTareOrPoidBrute(bonSortie, bonSortie.getBon().getTare());
-    }
-
-    private int validatePoidBrute(BonSortie bonSortie) {
-        return validateTareOrPoidBrute(bonSortie, bonSortie.getBon().getPoidsBrut());
-    }
-
-    /**
-     * *****************************
-     */
-    private boolean validateNombreContenantAndMlv(BonSortie bonSortie) {
-        String nombreContenant = bonSortie.getBon().getNombreContenant();
-        String mlvPesage = bonSortie.getBon().getMlvPesage();
-        boolean res = (StringUtil.isNotEmpty(nombreContenant) == 1 || (mlvPesage != null && mlvPesage.equalsIgnoreCase("oui")));
-        return res;
-    }
-
-    private int validateTareOrPoidBrute(BonSortie bonSortie, String tareOrPoidBrute) {
-        String poidsNet = bonSortie.getBon().getPoidsNet();
-        int mandatory = StringUtil.validateUsingCondition((validateNombreContenantAndMlv(bonSortie)) && (StringUtil.isEmpty(poidsNet)));
-        if (mandatory > 0) {
-            return StringUtil.isNotEmpty(tareOrPoidBrute);
-        }
-        return 2;
-    }
-
-    private int isValide(BonSortie bonSortie, List<String> defaultValue, String elementInList) {
-        String referenceDs = bonSortie.getBon().getReferenceDS();
-        if (StringUtil.isEmpty(referenceDs)) {
-            if (elementInList == null) {
-                return 3;
-            }
-            return checkeElementInList(defaultValue, elementInList);
-        } else {
-            if (elementInList == null) {
-                return -2;
-            }
-            return checkeElementInList(defaultValue, elementInList);
-        }
-    }
-
-    private int checkeElementInList(List<String> defaultValue, String element) {
-        int indexOfElement = -1;
-        if (defaultValue != null) {
-            indexOfElement = defaultValue.indexOf(element);
-        }
-        if (defaultValue == null) {
-            return 1;
-        } else if (indexOfElement != -1) {
-            return 2;
-        } else {
-            return -1;
-        }
+    public static Object[] isValideAndMandatoryExist(String mandatory, String element, String attributeName) {
+       return validateExistMandatoryStyle(mandatory, element != null, attributeName);
     }
 }

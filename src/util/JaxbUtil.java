@@ -13,6 +13,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import org.xml.sax.SAXException;
+import service.BonSortieMessageManager1L;
 
 /**
  *
@@ -26,14 +27,20 @@ public class JaxbUtil<T> {
         this.entityClass = entityClass;
     }
 
+    public T unmarshall(String xmlPath) throws JAXBException, SAXException {
+        return unmarshallAndValiadte(xmlPath, null);
+    }
+
     public T unmarshallAndValiadte(String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        MyValidationEventHandler.clearXsdErrors();
+        BonSortieMessageManager1L.clearErrorsXsd();
         JAXBContext context = JAXBContext.newInstance(entityClass);
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = sf.newSchema(new File(xsdPath));
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        unmarshaller.setSchema(schema);
-        unmarshaller.setEventHandler(new MyValidationEventHandler());
+        if (xsdPath != null) {
+            Schema schema = sf.newSchema(new File(xsdPath));
+            unmarshaller.setSchema(schema);
+            unmarshaller.setEventHandler(new MyValidationEventHandler());
+        }
         T myObject = (T) unmarshaller.unmarshal(new File(xmlPath));
         return myObject;
     }

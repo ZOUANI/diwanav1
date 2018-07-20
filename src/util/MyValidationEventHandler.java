@@ -5,10 +5,9 @@
  */
 package util;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
+import service.BonSortieMessageManager1L;
 
 /**
  *
@@ -16,12 +15,10 @@ import javax.xml.bind.ValidationEventHandler;
  */
 public class MyValidationEventHandler implements ValidationEventHandler {
 
-    private static List<String> xsdErrors = new ArrayList();
-
     @Override
     public boolean handleEvent(ValidationEvent event) {
 //	        System.out.println("SEVERITY:  " + event.getSeverity());
-        xsdErrors.add(event.getMessage());
+                BonSortieMessageManager1L.getErrorsXsd().add(event.getMessage());
 //	        System.out.println("LINKED EXCEPTION:  " + event.getLinkedException());
 //	        System.out.println("LOCATOR");
 //	        System.out.println("    LINE NUMBER:  " + event.getLocator().getLineNumber());
@@ -33,11 +30,4 @@ public class MyValidationEventHandler implements ValidationEventHandler {
         return true;
     }
 
-    public static String getXsdErrors() {
-        return StringUtil.transformListToString(xsdErrors);
-    }
-
-    public static void clearXsdErrors() {
-        xsdErrors.clear();
-    }
 }

@@ -16,36 +16,45 @@ import javax.persistence.Id;
  * @author YOUNES
  */
 @Entity
-public class MarqueMarchandise implements Serializable {
+public class Accuse implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long code;
+    private String description;
 
-    public Long getId() {
-        return id;
+    public String getDescription() {
+        return description;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getCode() {
+        return code;
+    }
+
+    public void setCode(Long code) {
+        this.code = code;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (code != null ? code.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MarqueMarchandise)) {
+        // TODO: Warning - this method won't work in the case the code fields are not set
+        if (!(object instanceof Accuse)) {
             return false;
         }
-        MarqueMarchandise other = (MarqueMarchandise) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        Accuse other = (Accuse) object;
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
             return false;
         }
         return true;
@@ -53,7 +62,7 @@ public class MarqueMarchandise implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.MarqueMarchandise[ id=" + id + " ]";
+        return "code=" + code + ", description=" + description;
     }
-    
+
 }
