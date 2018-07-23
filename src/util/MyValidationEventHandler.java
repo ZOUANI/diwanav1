@@ -7,7 +7,7 @@ package util;
 
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
-import service.BonSortieMessageManager1L;
+import validator.BonSortieMessageManager1L;
 
 /**
  *

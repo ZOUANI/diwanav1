@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBException;
 import org.xml.sax.SAXException;
-import service.BonSortieValidator1L;
-import service.BonSortieMessageManager1L;
-import service.BonSortieValidator;
+import validator.BonSortieMessageManager1L;
+import validator.BonSortieValidator;
 import util.StringUtil;
 
 /**

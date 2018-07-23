@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package validator;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
-import service.BonSortieValidator.TYPE_FILE;
+import validator.BonSortieValidator.TYPE_FILE;
 import util.NumberUtil;
 import util.StringUtil;
 import vo.BonSortie;

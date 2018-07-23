@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import service.BonSortieMessageManager1L;
-import service.BonSortieMessageManager2L;
-import service.BonSortieMessageManagerMetier;
+import validator.BonSortieMessageManager1L;
+import validator.BonSortieMessageManager2L;
+import validator.BonSortieMessageManagerMetier;
 
 /**
  *

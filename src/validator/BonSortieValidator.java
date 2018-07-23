@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package validator;
 
+import java.io.File;
+import java.io.IOException;
 import javax.xml.bind.JAXBException;
 import org.xml.sax.SAXException;
+import util.FileUtil;
 import util.StringUtil;
+import validator.BonSortieValidator.TYPE_FILE;
 import vo.BonSortie;
 
 /**
@@ -15,13 +19,28 @@ import vo.BonSortie;
  * @author YOUNES
  */
 public class BonSortieValidator {
-
+    
     public enum TYPE_FILE {
         CREATE, EDIT, REMOVE, ACK
     }
     BonSortieValidator1L bonSortie1LValidator = new BonSortieValidator1L();
     BonSortieValidator2L bonSortie2LValidator = new BonSortieValidator2L();
-
+    
+    public void validate(String absolutePath, String xsdPath) throws JAXBException, SAXException, IOException {
+        File myFolder = new File(absolutePath);
+        File tmpFolder = FileUtil.getTmpFile(myFolder);
+        FileUtil.copyFolder(myFolder, tmpFolder);
+        String files[] = tmpFolder.list();
+        for (String file : files) {
+            File myFile = new File(tmpFolder, file);
+            Object[] res = validate(absolutePath, myFile.getName(), xsdPath, getTypeFileByBS(bonSortie));
+            if (new Integer(res[0] + "") > 0) {
+                myFile.delete();
+            }
+            
+        }
+    }
+    
     public Object[] validate(String absolutePath, String xmlPath, String xsdPath, TYPE_FILE type_file) throws JAXBException, SAXException {
         if (type_file == TYPE_FILE.CREATE) {
             return validateCreate(absolutePath, xmlPath, xsdPath);
@@ -35,10 +54,11 @@ public class BonSortieValidator {
             return new Object[]{-5, BonSortieMessageManager1L.putTypeActionNotValidMessage(-1)};
         }
     }
-
+    
     private Object[] validateAbstract(String absoluteXmlPath, String absoluteXsd, String xmlPath,
-            String xsdPath, boolean activateRefDumAndDate, boolean activate1L, boolean activate2L,
-            TYPE_FILE type_file) throws JAXBException, SAXException {
+            String xsdPath, boolean activateRefDumAndDate, boolean activate1L, boolean activate2L
+    ) throws JAXBException, SAXException {
+        
         Object[] resValidateXmlFileName = splitXmlFileName(xmlPath);
         if (new Integer(resValidateXmlFileName[0] + "") < 0) {
             return new Object[]{-1, BonSortieMessageManager1L.putErrorMessageXmlFileNameNotValidMessage(-1)};
@@ -46,6 +66,7 @@ public class BonSortieValidator {
         boolean ack = (new Integer(resValidateXmlFileName[0] + "") == 1);
         // BonSortie bonSortie = new JaxbBonSortie().unmarshallAndValiadte(absoluteXmlPath + xmlPath, absoluteXsd + xsdPath);
         BonSortie bonSortie = new JaxbBonSortie().unmarshall(absoluteXmlPath + xmlPath);
+        TYPE_FILE type_file = getTypeFileByBS(bonSortie);
         if (!BonSortieMessageManager1L.getErrorsXsd().isEmpty()) {
             validate1L(bonSortie, activate1L, ack, type_file);
             return new Object[]{-2, BonSortieMessageManager1L.getErrors1L()};
@@ -59,31 +80,31 @@ public class BonSortieValidator {
             return new Object[]{1, bonSortie};
         }
     }
-
+    
     private Object[] validateCreate(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, true, TYPE_FILE.CREATE);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, true);
     }
-
+    
     private Object[] validateEdit(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, true, TYPE_FILE.EDIT);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, true);
     }
-
+    
     private Object[] validateAck(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, false, true, true, TYPE_FILE.ACK);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, false, true, true);
     }
-
+    
     private Object[] validateRemove(String absolutePath, String xmlPath, String xsdPath) throws JAXBException, SAXException {
-        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, false, TYPE_FILE.REMOVE);
+        return validateAbstract(absolutePath, absolutePath, xmlPath, xsdPath, true, true, false);
     }
-
+    
     private void validate1L(BonSortie bonSortie, boolean activate1L, boolean ack, TYPE_FILE type_file) {
         bonSortie1LValidator.valiadte1L(bonSortie, activate1L, ack, type_file);
     }
-
+    
     private void validate2L(BonSortie bonSortie, boolean activate1L, boolean ack, TYPE_FILE type_file) {
         bonSortie2LValidator.validate2L(bonSortie, activate1L, ack, type_file);
     }
-
+    
     private Object[] splitXmlFileName(String bonSortieXmlFileName) {
         if (StringUtil.isEmpty(bonSortieXmlFileName)) {
             return new Object[]{-1, null, null};
@@ -97,7 +118,7 @@ public class BonSortieValidator {
             return new Object[]{-2, null, null};
         }
     }
-
+    
     private boolean validateRefDumAndDate(Object[] resValidateXmlFileName, BonSortie bonSortie, boolean isActive) {
         if (!isActive) {
             return true;
@@ -111,7 +132,7 @@ public class BonSortieValidator {
         boolean resDate = compareRowDateWithFormattedDate(rowDate, bonSortie.getHeader().getDateMessage());
         return resRefDum && resDate;
     }
-
+    
     public boolean compareRowDateWithFormattedDate(String rowDate, String formattedDate) {
         String[] resFormated = formattedDate.split("T");
         String yMd = resFormated[0];
@@ -120,7 +141,7 @@ public class BonSortieValidator {
         hms = hms.replace(":", "");
         return (yMd + hms).equals(rowDate);
     }
-
+    
     public static Object[] validateExistMandatoryStyle(String attribute, boolean condition, String attributeNameMessage) {
         int exist = StringUtil.isNotEmpty(attribute);
         int res;
@@ -131,7 +152,7 @@ public class BonSortieValidator {
         }
         return new Object[]{res, attributeNameMessage};
     }
-
+    
     public static Object[] validateExistNotMandatoryStyle(String attribute, boolean condition, String attributeNameMessage) {
         boolean isNull = StringUtil.isEmpty(attribute);
         int res;
@@ -142,8 +163,23 @@ public class BonSortieValidator {
         }
         return new Object[]{res, attributeNameMessage};
     }
-
+    
     public static Object[] isValideAndMandatoryExist(String mandatory, String element, String attributeName) {
-       return validateExistMandatoryStyle(mandatory, element != null, attributeName);
+        return validateExistMandatoryStyle(mandatory, element != null, attributeName);
     }
+    
+    private TYPE_FILE getTypeFileByBS(BonSortie bonSortie) {
+        if (bonSortie.getHeader().getFonctionMessage().equals("1")) {
+            return TYPE_FILE.CREATE;
+        } else if (bonSortie.getHeader().getFonctionMessage().equals("2")) {
+            return TYPE_FILE.EDIT;
+        } else if (bonSortie.getHeader().getFonctionMessage().equals("3")) {
+            return TYPE_FILE.REMOVE;
+        } else if (bonSortie.getHeader().getFonctionMessage() == null) {
+            return TYPE_FILE.ACK;
+        } else {
+            return null;
+        }
+    }
+    
 }
